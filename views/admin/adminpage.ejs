@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/admin/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/userstyle.css">
+  <link rel="stylesheet" href="/css/adminlogin.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+  <link href="img/favicon.ico" rel="icon">
+
+  <!--  Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  <!--  Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!--  Customized Bootstrap Stylesheet -->
+  <link href="css/uhome.css" rel="stylesheet"> -->
+
+</head>
+
+<body>
+  <div class="home-content">
+    <div class="overview-boxes">
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic btn">
+            <h4>ORDERS</h4>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic btn ">
+            <h4>PRODUCTS</h4>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic btn ">
+            <h4>BRAND</h4>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic btn ">
+            <h4>CATEGORIES</h4>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div style="width:40%;margin-top:5%;margin-left:30%;">
+      <canvas style="width:100%; " id="myChart"></canvas>
+    </div>
+
+  </div>
+
+  </section>
+
+
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function () {
+      sidebar.classList.toggle("active");
+      if (sidebar.classList.contains("active")) {
+        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+      } else
+        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+    }
+  </script>
+
+
+  <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['user', 'Placed', 'Shipped', 'Delivered', 'Cancelled'],
+        datasets: [{
+          label: '# of counts',
+          data: ['<%= user%>', '<%= placed%>', '<%= shipped%>', '<%= delivered%>', '<%= cancelled%>'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

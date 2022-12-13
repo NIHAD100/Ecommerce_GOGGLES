@@ -1,0 +1,43 @@
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+              <th scope="col">SNO</th>
+              <th scope="col">PICTURE</th>
+              <th scope="col">PRODUCT NAME</th>
+              <th scope="col">PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (var i=0;i<products.length;i++) { %> 
+            <tr>
+              <th scope="row"><%= i+1 %></th>
+              <td><img src="/images/<%= products[i].orderproducts[0].picture %>" alt="" style="width: 4em; height: 4em;"></td>
+              <td><%= products[i].orderproducts[0].productName %></td>
+              <td>₹<%= products[i].orderproducts[0].sellingPrice %></td>
+            </tr>
+            <% } %>
+            
+          </tbody>
+      </table>
+</div>
+
+<div class="container">
+  <form action="/admin/orderupdate" method="post">
+  <select class="form-select form-select-lg mb-3 w-25 bg-primary" name="status" aria-label=".form-select-lg example">
+    <option value="placed">Placed</option>
+    <option value="shipped">Shipped</option>
+    <option value="cancelled">Cancelled</option>
+    <option value="delivered">Delivered</option>
+  </select>
+  <input type="text" name="orderId" style="display:none ;" value="<%= orderId %>">
+  <button class=" btn btn-success" style="border-radius: 10px;">Update</button>
+</form>
+</div>

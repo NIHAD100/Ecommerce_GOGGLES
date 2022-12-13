@@ -1,0 +1,209 @@
+<div class="container-fluid">
+
+<table class="table table-success table-striped">
+    <thead>
+        <tr>
+          <th scope="col">SL NO</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Image</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+          <th scope="col">Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(products.length>0) {%> 
+        <tr>
+          <% for(i=0;i<products.length;i++) {%>
+          <th scope="row"><%=i+1 %></th>
+          <td><%=products[i].product.productName %></td>
+          <td><img src="/images/<%=products[i].product.picture %>" style="width: 4em; height:4em;"></td>
+          <td>Rs:<%=products[i].product.sellingPrice %></td>
+
+          
+          <td>
+            <button class="cart-item-count btn btn-primary mr-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>','<%= userData._id %>',-1)">-</button>
+            <span id="<%= products[i].product._id %>"><%=products[i].quantity%></span>
+            <button class="cart-item-count btn btn-primary ml-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>','<%= userData._id %>',1)">+</button>
+          </td>
+          <td>Rs:
+            <% let Total = products[i].quantity* products[i].product.sellingPrice %>
+            <%= Total %>
+          </td>
+          <td>
+            <button onclick="DeleteFromcart('<%=products[i].item%>')" class="btn btn-sm btn-primary">X</button>
+          </td>
+         
+
+        </tr>
+        <% } %>
+        <% } %>
+      </tbody>
+  </table>
+  <hr>
+  <!-- <div class="float-right pr-5 mt-4">
+  <h2 class="float-right mr-5">Total:Rs.<span id="totalP"><%= totalValue %></span></h2>
+  <a href="/place-order" class="float-right btn btn-sm btn-primary" mt-3" style="width: 80%;">Place Order</a>
+  </div> -->
+
+  <div class="col-lg-4 float-right">
+               
+    <form action="" id="couponSubmit" onclick="applyCoupon()">
+    <div class="input-group">
+        <input type="text" class="form-control p-4" placeholder="Coupon Code" id="couponCode" name="couponCode" required>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary" onclick="">Apply Coupon</button>
+        </div>
+        <span id="couponMessage"></span>
+      </div>
+    </form>
+
+<div class="card border-secondary mb-5">
+    <div class="card-header bg-secondary border-0">
+        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between mb-3 pt-1">
+            <h6 class="font-weight-medium">Subtotal</h6>
+            <h6 class="font-weight-medium"> ₹<span id="totalP"><%=totalValue%></span></h6>
+        </div>
+        <div class="d-flex justify-content-between mb-3 pt-1">
+            <h6 class="font-weight-medium">discount</h6>
+            <h6 class="font-weight-medium" id="discountId">0%
+            </h6>
+        </div>
+        <div class="d-flex justify-content-between">
+            <h6 class="font-weight-medium">Shipping</h6>
+            <h6 class="font-weight-medium">5%
+            </h6>
+        </div>
+    </div>
+    <div class="card-footer border-secondary bg-transparent">
+        <div class="d-flex justify-content-between mt-2">
+            <h5  class="font-weight-bold">Total</h5>
+            <h5 class="font-weight-bold"  >
+              ₹<span id="final_total"><%=totalValue%></span></h5>
+        </div>
+        <button class="btn btn-block btn-primary my-3 py-3" onclick="proceedToCheckout()">Proceed To Checkout</button>
+        <!-- <a href="/place-order" class="btn btn-block btn-primary my-3 py-3"  >Proceed To Checkout</a> -->
+    </div>
+</div>
+</div>
+  
+</div>
+
+
+<script>
+
+
+function proceedToCheckout(){
+
+  let finalTotal = document.getElementById('final_total').innerHTML
+  fetch('/proceedToCheckout?FINALTOTAL='+finalTotal,
+  {
+    method:'get'
+  }
+  ).then(res=>res.json()).then((data)=>{
+    location.href="/place-order?finalTotal="+data
+  })
+}
+
+
+
+  function changeQuantity(cartId,proId,userId,count){
+    let quantity = parseInt(document.getElementById(proId).innerHTML)
+    count =parseInt(count)
+     $.ajax({
+      url:'/change-product-quantity',
+      data:{
+        user:userId,
+        cart:cartId,
+        product:proId,
+        count:count,
+        quantity:quantity
+      },
+      method:'post',
+      success:(response)=>{
+        if(response.removeProduct){
+          swal({
+            title:"REMOVE",
+            text:"Do you want to remove the item",
+            icon:"warning",
+            buttons:["Cancel","OK"]
+           }).then(val=>{
+            if(val){
+             
+          location.reload()
+            }
+           })
+        }else{
+          document.getElementById(proId).innerHTML=quantity+count
+          document.getElementById('totalP').innerHTML=response.total
+          document.getElementById('final_total').innerHTML=response.total
+        
+
+        }
+        
+      }
+    
+     })
+  }
+
+   
+function DeleteFromcart(proId){
+  swal({
+    title:"DELETE",
+    text:"Do you want to delete the item",
+    icon:'warning',
+    buttons:["Cancel","OK"]
+  }).then(val=>{
+    if(val){
+      fetch('/deletefromcart',
+      {
+         method:'delete',
+         headers:{
+        'Content-Type':'application/JSON'
+         },
+         body:JSON.stringify({proId})
+      })
+      .then(()=>{
+        window.location.reload()
+       })
+       }
+   
+  })
+  
+}
+
+$('#couponSubmit').submit((e)=>{
+  e.preventDefault()
+  let coupon = document.getElementById('couponCode').value.toUpperCase()
+  let message = document.getElementById('couponMessage');
+  let discountDisplay = document.getElementById('discountId');
+  let finalTotal = document.getElementById('final_total')
+  fetch('/applycoupon',{
+    method:'post',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      coupon
+    })
+  }).then(res =>res.json()).then(data=>{
+    if(data.couponStatus == true){
+      message.innerHTML == ''
+      discountDisplay.innerHTML = data.discount
+      finalTotal.innerHTML = data.discountedTotal 
+    }else{
+      message.innerHTML = 'COUPON NOT ACCEPTABLE'
+      discountDisplay.innerHTML = data.discount
+      finalTotal.innerHTML = data.discountedTotal   
+    }
+  })
+})
+
+
+
+   
+</script>

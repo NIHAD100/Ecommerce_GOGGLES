@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/admin/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/userstyle.css">
+  <link rel="stylesheet" href="/css/adminlogin.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Boxicons CDN Link -->
+ <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+ 
+ 
+   <link href="img/favicon.ico" rel="icon">
+ 
+     <!--  Google Web Fonts -->
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+ 
+     <!-- Font Awesome -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+ 
+    <!--  Libraries Stylesheet -->
+ <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+ 
+   <!--  Customized Bootstrap Stylesheet -->
+  <link href="css/uhome.css" rel="stylesheet"> -->
+ 
+</head>
+<body>
+  
+
+    <br>
+    <br><br>
+    <br>
+    <br>
+    <div class="container">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Add Banner
+        </button>
+        </div>
+        <!-- Modal -->
+        <br>
+        <form action="/admin/addbanner" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">ADD BANNER</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+             
+    
+              <div class="modal-body">
+                <label for="addbanner">ADD IMAGE</label>
+                <input type="file" name="bannerimg" id="newBannerimg">
+              </div>
+    
+              <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+           <!-- javascript of modal -->
+        <script>
+         const myModal = document.getElementById('myModal')
+        const myInput = document.getElementById('myInput')
+        
+        myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+        })
+        </script>
+    
+    <div class="container">
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">NO</th>
+                  
+                  <th scope="col">Image</th>
+                
+                  <th scope="col">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+               <% for (var i=0; i<banner.length;i++) { %>
+                <tr>
+                    <th scope="row"><%= i+1 %></th>
+                   
+                    <td><img src="/images/<%= banner[i].picture %>" style="width:4em; height:4em;"></td>
+                   
+                    <td><a onclick="Deletebanner('<%=banner[i]._id%>')" class="btn btn-danger">DELETE</a></td>
+                  </tr>
+                <% } %>
+              </tbody>
+          </table>
+        </div>
+    
+        <script>
+          function Deletebanner(bannerId){
+            
+            fetch("/admin/deletebanner?id="+bannerId,{
+              
+              method:'delete',
+              
+            }).then(()=>{
+              window.location.reload()
+            })
+          }
+        </script>
+
+
+</body>
+</html>

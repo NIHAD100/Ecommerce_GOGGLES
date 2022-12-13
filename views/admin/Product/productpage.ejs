@@ -1,0 +1,107 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/admin/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/userstyle.css">
+  <link rel="stylesheet" href="/css/adminlogin.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Boxicons CDN Link -->
+ <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+ 
+ 
+   <link href="img/favicon.ico" rel="icon">
+ 
+     <!--  Google Web Fonts -->
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+ 
+     <!-- Font Awesome -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+ 
+    <!--  Libraries Stylesheet -->
+ <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+ 
+   <!--  Customized Bootstrap Stylesheet -->
+  <link href="css/uhome.css" rel="stylesheet"> -->
+ 
+</head>
+<body>
+  
+<div class="container product">
+  <a class="btn btn-primary  mb-4" href="/admin/addproduct" role="button">Add Product</a>
+<table id="productsTable" class="table table-success table-striped" >
+  <thead>
+      <tr>
+        <th scope="col">NO.</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">selling Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let i=0;i<product.length;i++) {%>
+      <tr>
+        <th scope="row"><%= i+1%></th>
+        <td><%=product[i].productName%></td>
+        <td><%=product[i].quantityName%></td>
+        <td><%=product[i].sellingPrice%></td>
+        <td><img src="/images/<%=product[i].picture %>" style="width: 4em; height:4em;" alt=""></td>
+        <td><a href="/admin/editproduct?id=<%= product[i]._id%>" class="btn btn-warning">Edit</a>
+        <a onclick="Deleteproduct('<%=product[i]._id%>')" class="btn btn-danger">Delete</a></td>
+      </tr>
+      <% } %>
+    </tbody>
+</table>
+</div>
+
+    
+<script>
+
+function Deleteproduct(productId){
+ swal({
+  title: "DELETE!",
+  text: "Do you want to Delete the item",
+  icon: "warning",
+  buttons: ["Cancel","OK"]
+ }).then(val=>{
+  if(val){
+    fetch('/admin/deleteproduct',{
+    method:'delete',
+    headers:{
+      'Content-Type':'application/JSON'
+    },
+    body:JSON.stringify({
+      productId
+    })
+  }).then(()=>{
+    window.location.reload()
+  })
+  }
+ })
+  
+}
+
+$(document).ready(function () {
+  $('#productsTable').DataTable();
+});
+
+</script>
+
+</body>
+</html>
