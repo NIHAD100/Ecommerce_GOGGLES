@@ -38,7 +38,7 @@ app.set("layout","./layout/layout")
 
 db.connect((err)=>{
     if(err) console.log("connection error"+err);
-    else console.log("Database connected successfully");
+    else console.log("Database connected");
 })
 
 
