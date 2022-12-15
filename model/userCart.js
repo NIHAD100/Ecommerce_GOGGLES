@@ -189,6 +189,7 @@ module.exports={
 
                 db.get().collection(collection.Order_List).insertOne(orderObj).then((response)=>{
                    db.get().collection(collection.User_Cart).deleteOne({user:ObjectId(order.userId)})
+                   console.log('insertId = ',response.insertId);
                     resolve(response.insertedId)
                 })
             })

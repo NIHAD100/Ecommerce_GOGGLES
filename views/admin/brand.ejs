@@ -1,112 +1,74 @@
+<!-- Button trigger modal -->
+<div class="container product">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Brand
+  </button>
+</div>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/admin/css/style.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/userstyle.css">
-  <link rel="stylesheet" href="/css/adminlogin.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Boxicons CDN Link -->
- <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
- 
- 
-   <link href="img/favicon.ico" rel="icon">
- 
-     <!--  Google Web Fonts -->
- <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
- 
-     <!-- Font Awesome -->
- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
- 
-    <!--  Libraries Stylesheet -->
- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
- 
-   <!--  Customized Bootstrap Stylesheet -->
-  <link href="css/uhome.css" rel="stylesheet"> -->
- 
-</head>
-<body>
-  <!-- Button trigger modal -->
-  <div class="container product">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Add Brand
-    </button>
-    </div>
-  
-    <!-- table -->
-    <div class="container">
-      <div class="bname">
-  <table class="table table-success table-striped" style="border:2px solid black;">
+<!-- table -->
+<div class="container">
+  <div class="bname">
+    <table class="table table-success table-striped" style="border:2px solid black;">
       <thead>
-      
+
+        <tr>
+          <th scope="col">NO.</th>
+          <th scope="col">Brand Name</th>
+          <th scope="col">Edit Brand</th>
+          <th scope="col">Delete Brand</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <% for(let i=0;i<brandDetails.length;i++) { %>
           <tr>
-            <th scope="col">NO.</th>
-            <th scope="col">Brand Name</th>
-            <th scope="col">Edit Brand</th>
-            <th scope="col">Delete Brand</th>
-          </tr>
-         
-        </thead>
-        <tbody>
-          <% for(let i=0;i<brandDetails.length;i++) { %>
-          <tr>
-            <th scope="row"><%= i+1 %></th>
-            <td><%=brandDetails[i].brandName %></td>
+            <th scope="row">
+              <%= i+1 %>
+            </th>
+            <td>
+              <%=brandDetails[i].brandName %>
+            </td>
             <td><a onclick="Editbrand('<%=brandDetails[i]._id%>')" class="btn btn-warning">EDIT</a></td>
             <td><a onclick="Deletebrand('<%=brandDetails[i]._id%>')" class="btn btn-danger">DELETE</a></td>
           </tr>
           <% } %>
-        </tbody>
+      </tbody>
     </table>
   </div>
-  </div>
-  
-  <script>
+</div>
 
-      function Deletebrand(brandId){
+<script>
+
+  function Deletebrand(brandId) {
     swal({
-      title:"DELETE",
-      text:"Do you want to delete the item",
-      icon:'warning',
-      buttons:["Cancel","OK"]
-    }).then(val=>{
-      if(val){
-        fetch('/admin/deleteBrand',{
-      method:'delete',
-      headers:{
-        'Content-Type':'application/JSON'
-      },
-      body:JSON.stringify({
-        brandId
-      })
-    }).then(()=>{
-      window.location.reload()
-    })
+      title: "DELETE",
+      text: "Do you want to delete the item",
+      icon: 'warning',
+      buttons: ["Cancel", "OK"]
+    }).then(val => {
+      if (val) {
+        fetch('/admin/deleteBrand', {
+          method: 'delete',
+          headers: {
+            'Content-Type': 'application/JSON'
+          },
+          body: JSON.stringify({
+            brandId
+          })
+        }).then(() => {
+          window.location.reload()
+        })
       }
     })
-    
+
   }
-  </script>
-  
-  
-  
-  
-  <!-- Modal -->
-  <form action="/admin/addbrand" method="post">
+</script>
+
+
+
+
+<!-- Modal -->
+<form action="/admin/addbrand" method="post">
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -115,8 +77,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <label for="addbrand">ADD BRAND</label>
-            <input type="text" name="brandName" id="newCategory">
+          <label for="addbrand">ADD BRAND</label>
+          <input type="text" name="brandName" id="newCategory">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
@@ -125,20 +87,17 @@
       </div>
     </div>
   </div>
-  </form>
-  
-  
-  <!-- javascript of modal  -->
-  
-  
-  <script>
-    const myModal = document.getElementById('myModal')
-   const myInput = document.getElementById('myInput')
-   
-   myModal.addEventListener('shown.bs.modal', () => {
-   myInput.focus()
-   })
-   </script>
-  
-</body>
-</html>
+</form>
+
+
+<!-- javascript of modal  -->
+
+
+<script>
+  const myModal = document.getElementById('myModal')
+  const myInput = document.getElementById('myInput')
+
+  myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus()
+  })
+</script>

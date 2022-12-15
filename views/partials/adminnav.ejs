@@ -1,14 +1,13 @@
+
 <section class="home-section">
   <nav>
     <div class="sidebar-button">
       <i class='bx bx-menu sidebarBtn'></i>
-      <span class="dashboard">
-        <%= title%>
-      </span>
+      <span class="dashboard"><%= title%></span>
     </div>
     <div class="search-box">
       <input type="text" placeholder="Search...">
-      <i class='bx bx-search'></i>
+      <i class='bx bx-search' ></i>
     </div>
     <div class="profile-details">
       <!--<img src="images/profile.jpg" alt="">-->
@@ -21,10 +20,10 @@
     let sidebar = document.querySelector(".sidebar");
     let sidebarBtn = document.querySelector(".sidebarBtn");
     sidebarBtn.onclick = function () {
-      sidebar.classList.toggle("active");
-      if (sidebar.classList.contains("active")) {
-        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-      } else
-        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("active")) {
+            sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else
+            sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
     }
-  </script>
+</script>

@@ -1,97 +1,67 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/admin/css/style.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/userstyle.css">
-  <link rel="stylesheet" href="/css/adminlogin.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Boxicons CDN Link -->
- <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
- 
- 
-   <link href="img/favicon.ico" rel="icon">
- 
-     <!--  Google Web Fonts -->
- <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
- 
-     <!-- Font Awesome -->
- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
- 
-    <!--  Libraries Stylesheet -->
- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
- 
-   <!--  Customized Bootstrap Stylesheet -->
-  <link href="css/uhome.css" rel="stylesheet"> -->
- 
-</head>
-<body>
 <br>
 <br>
 <br>
 <br>
 
 <section class="home-section mt-2 ">
-    <button class="btn btn-primary" onclick="generatePDF()">Download to PDF</button>
-    <div class="container-fluid">
-      <table id="Category" class="table  table-hover mt-3" style="border:2px solid rgb(88, 76, 76);">
-        <thead >
-          <tr class="text-primary">
-            <th scope="col">SLNO</th>
-            <th scope="col">ORDER ID</th>
-            <th scope="col">ORDER DATE</th>
-            <th scope="col">CUSTOMER ADDRESS</th>
-            <th scope="col">ORDER STATUS</th>
-            <th scope="col">PAYMENT METHOD</th>
-            <th scope="col">AMOUNT</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          <% for(var i=0;i< orderList.length;i++){ %>
+  <button class="btn btn-primary" onclick="generatePDF()">Download to PDF</button>
+  <div class="container-fluid">
+    <table id="Category" class="table  table-hover mt-3" style="border:2px solid rgb(88, 76, 76);">
+      <thead>
+        <tr class="text-primary">
+          <th scope="col">SLNO</th>
+          <th scope="col">ORDER ID</th>
+          <th scope="col">ORDER DATE</th>
+          <th scope="col">CUSTOMER ADDRESS</th>
+          <th scope="col">ORDER STATUS</th>
+          <th scope="col">PAYMENT METHOD</th>
+          <th scope="col">AMOUNT</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% for(var i=0;i< orderList.length;i++){ %>
           <tr>
-            <th scope="row"><%= i+1 %></th>
-            <td><a href="/admin/adminviewOrderProducts?id=<%= orderList[i]._id %>"><%= orderList[i]._id %></a></td> 
-            <td><%= orderList[i].date.toLocaleDateString() %></td>
-            <td><%= orderList[i].deliveryDetails.address %></td>
-            <td><%= orderList[i].status %></td>
-            <td><%= orderList[i].paymentMethod %></td>
-            <td>₹ <%= orderList[i].totalAmount %></td>
+            <th scope="row">
+              <%= i+1 %>
+            </th>
+            <td><a href="/admin/adminviewOrderProducts?id=<%= orderList[i]._id %>">
+                <%= orderList[i]._id %>
+              </a></td>
+            <td>
+              <%= orderList[i].date.toLocaleDateString() %>
+            </td>
+            <td>
+              <%= orderList[i].deliveryDetails.address %>
+            </td>
+            <td>
+              <%= orderList[i].status %>
+            </td>
+            <td>
+              <%= orderList[i].paymentMethod %>
+            </td>
+            <td>₹ <%= orderList[i].totalAmount %>
+            </td>
           </tr>
           <% } %>
-        </tbody>
-      </table>
-    </div>
-  </section>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-  <script>
+<script>
 
- 
+
   function generatePDF() {
     const element = document.getElementById('Category');
     var opt = {
-        margin: 1,
-        filename: 'orderReportPdf_example.pdf',
-        image: { type: 'png', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+      margin: 1,
+      filename: 'orderReportPdf_example.pdf',
+      image: { type: 'png', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
     // Choose the element that our invoice is rendered in.
     html2pdf().set(opt).from(element).save();
-}
+  }
 </script>
-</body>
-</html>

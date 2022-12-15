@@ -94,16 +94,21 @@
 
   function razorpayPayment(order){
     var options = {
-            "key": "rzp_test_9oT5CWpksAyeFQ", // Enter the Key ID generated from the Dashboard
+            "key": "rzp_test_Hk92D1QDc4EXmH", // Enter the Key ID generated from the Dashboard
             "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
-            "name": "woodQ Furniture",
+            "name": "GOGGLES",
             "description": "Test Transaction",
             "image": "https://example.com/your_logo",
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "callback_url": "https:eneqd3r9zrjok.x.pipedream.net/",
             "handler": function (response) {
                 verifyPayment(response, order)
+            },
+            'prefil':{
+                'name':'user',
+                'contact':'9999999999',
+                'email':'user@gmail.com'
             },
             "notes": {
                 "address": "Razorpay Corporate Office"

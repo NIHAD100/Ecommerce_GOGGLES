@@ -18,7 +18,7 @@ module.exports = {
             let loginStatus = false
             let response = {}
             let user = await db.get().collection(collection.User_Details).findOne({Name:userDetails.Name})
-            if(user){
+            if(user && user.state==='active'){
                 if(user.verified == 1){
                     console.log(user);
                     bcrypt.compare(userDetails.Password,user.Password).then((status)=>{

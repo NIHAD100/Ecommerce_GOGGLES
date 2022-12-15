@@ -14,12 +14,11 @@ const carousal = require('../../model/banner')
 let mailTransporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "vyshnav404@gmail.com",
-    pass: "cfurmqbfeuxzcwwz",
+    user: "nihadnhd7@gmail.com",
+    pass: "jyrkrfrasudzjutt",
   },
 });
 
-const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 // OTP end
 
@@ -39,7 +38,7 @@ const firstClick = (req, res) => {
     userProductView.displayProduct().then((productDetails) => {
       categoryView.showCategory().then((category) => {
         carousal.showBanner().then((banner)=>{
-        res.render('user/userpage', { admin: false, user: true, productDetails, category,userData:null ,banner})
+          res.render('user/userpage', { admin: false, user: true, productDetails, category,userData:null ,banner})
         })
       })
     })
@@ -54,7 +53,7 @@ const userLogin = (req, res) => {
     res.render('user/userlogin', { admin: false, user: false, "LoginErr": req.session.loginErr })
     req.session.loginErr = false
   }
-
+  
 }
 
 
@@ -65,10 +64,11 @@ const userSignUp = (req, res) => {
 const userRegister = (req, res) => {
 
   let verified = 0;
-
+  
+  const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
   const { Username, Email, Password } = req.body;
   let mailDetails = {
-    from: "vyshnav404@gmail.com",
+    from: "nihadnhd7@gmail.com",
     to: Email,
     subject: "Eproject",
     html: `<p>YOUR OTP FOR REGISTERING IN GOGGLES IS ${OTP}</p>`,
@@ -147,37 +147,3 @@ module.exports = {
   otpverification,
   userLogout
 }
-
-
-// exports.signupaccount = async (req, res) => {
-//   userHelper.doSignup(req.body).then((response) => {
-//       console.log(response);
-//       res.redirect("/");
-//   });
-// }
-
-// exports.signup = async (req, res) => {
-//   if (req.session.userloggedIn) {
-//       res.render("user/userpage", { admin: false, user: true });
-//   } else {
-//       res.render("user/usersignup", { admin: false, user: false });
-//   }
-// }
-
-// exports.about = async (req, res) => {
-//   if (req.session.userloggedIn) {
-//       res.render("user/userabout", { admin: false, user: true });
-//   } else {
-//       res.render("user/usersignup", { admin: false, user: false });
-//   }
-// }
-
-// exports.logout = async (req, res) => {
-//   req.session.destroy(function (err) {
-//       if (err) {
-//           res.send("error")
-//       } else {
-//           res.redirect("/")
-//       }
-//   })
-// }

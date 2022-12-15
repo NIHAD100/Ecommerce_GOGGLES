@@ -12,31 +12,37 @@ const multer = require('multer')
 const methodOverride = require('method-override')
 const getCoupon = require('../controllers/admin/admcoupon')
 
-// storage setting
-const storage = multer.diskStorage({
-    destination:'./Public/images',
-    filename:(req,file,cb)=>{
-        cb(null,Date.now() + file.originalname)
-    }
-})
+// // storage setting
+// const storage = multer.diskStorage({
+//     destination:'./Public/images',
+//     filename:(req,file,cb)=>{
+//         cb(null,Date.now() + file.originalname)
+//     }
+// })
 
-// upload setting
+// // upload setting
+// const upload = multer({
+//     storage: storage,
+//     fileFilter: (req, file, cb)=>{
+//         if(
+//             file.mimetype == 'image/jpeg'||
+//             file.mimetype == 'image/jpg'||
+//             file.mimetype == 'image/png'||
+//             file.mimetype == 'image/gif'||
+//             file.mimetype == 'image/webp'
+//         ){
+//             cb(null, true)
+//         }else{
+//             cb(null, false);
+//             cb(new Error('Only jpeg,jpg,png and gif image allow'))
+//         }
+//     }
+// })
+
+// for cloudinary
+const {storage}=require('../cloudinary/cloudinary')
 const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb)=>{
-        if(
-            file.mimetype == 'image/jpeg'||
-            file.mimetype == 'image/jpg'||
-            file.mimetype == 'image/png'||
-            file.mimetype == 'image/gif'||
-            file.mimetype == 'image/webp'
-        ){
-            cb(null, true)
-        }else{
-            cb(null, false);
-            cb(new Error('Only jpeg,jpg,png and gif image allow'))
-        }
-    }
+    storage 
 })
 
 
@@ -88,6 +94,8 @@ router.post('/orderupdate',sessionChecker.adminSessionChecker,getOrder.statusUpd
 
 // for user
 router.get('/user',sessionChecker.adminSessionChecker,getUser.showUser)
+router.post('/usermanagement/block',sessionChecker.adminSessionChecker,getUser.userBlock)
+router.post('/usermanagement/unblock',sessionChecker.adminSessionChecker,getUser.userUnblock)
 
 // for logout
 router.get('/logout',adminset.adminLogout)
