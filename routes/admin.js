@@ -7,6 +7,7 @@ const sessionChecker = require('../middleware/sessionmiddleware')
 const getBrand = require('../controllers/admin/admbrand')
 const getUser = require('../controllers/admin/adminusermodel')
 const getBanner = require('../controllers/admin/admbanner')
+const getMiniBanner = require('../controllers/admin/admmini-banner')
 const getOrder = require('../controllers/admin/admOrderlist')
 const multer = require('multer')
 const methodOverride = require('method-override')
@@ -55,7 +56,7 @@ router.post('/login',adminset.adminLoginHome)
 
 // for category
 router.get('/category',sessionChecker.adminSessionChecker,getCategory.showCategory)
-router.post('/addcategory',sessionChecker.adminSessionChecker,getCategory.addCategory)
+router.post('/addcategory',upload.single('categoryimg'),sessionChecker.adminSessionChecker,getCategory.addCategory)
 router.delete('/deleteCategory',sessionChecker.adminSessionChecker,getCategory.deleteCategory)
 
 
@@ -76,6 +77,11 @@ router.get('/editproduct',sessionChecker.adminSessionChecker,getProduct.editProd
 router.get('/banner',sessionChecker.adminSessionChecker,getBanner.showBanner)
 router.post('/addbanner',upload.single('bannerimg'),sessionChecker.adminSessionChecker,getBanner.addBanner)
 router.delete('/deletebanner',sessionChecker.adminSessionChecker,getBanner.deleteBanner)
+
+// for Mini-bannner
+router.get('/mini-banner',sessionChecker.adminSessionChecker,getMiniBanner.showBanner)
+router.post('/addminibanner',upload.single('bannerimg'),sessionChecker.adminSessionChecker,getMiniBanner.addBanner)
+router.delete('/deleteminibanner',sessionChecker.adminSessionChecker,getMiniBanner.deleteBanner)
 
 // for coupon
 router.get('/coupon',sessionChecker.adminSessionChecker,getCoupon.showCoupon)

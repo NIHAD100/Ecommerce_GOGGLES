@@ -6,6 +6,7 @@ const { Product_Details } = require('../../config/collection');
 const viewCart = require('../../model/userCart')
 const userwhishlist = require('../../model/whishlistModel')
 const carousal = require('../../model/banner')
+const minicarousal = require('../../model/mini-banner')
 // require('dotenv').config()
 
 
@@ -18,7 +19,7 @@ let mailTransporter = nodemailer.createTransport({
     pass: "jyrkrfrasudzjutt",
   },
 });
-
+const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 // OTP end
 
@@ -30,16 +31,20 @@ const firstClick = (req, res) => {
     userProductView.displayProduct().then((productDetails) => {
       categoryView.showCategory().then((category) => {
         carousal.showBanner().then((banner)=>{
-        res.render('user/userpage', { admin: false, user: true, productDetails, category, userData ,banner })
+          minicarousal.showBanner().then((minibanner)=>{
+        res.render('user/userpage', { admin: false, user: true, productDetails, category, userData ,banner, minibanner })
       })
+    })
     })
   })
   } else {
     userProductView.displayProduct().then((productDetails) => {
       categoryView.showCategory().then((category) => {
         carousal.showBanner().then((banner)=>{
-          res.render('user/userpage', { admin: false, user: true, productDetails, category,userData:null ,banner})
+          minicarousal.showBanner().then((minibanner)=>{
+          res.render('user/userpage', { admin: false, user: true, productDetails, category,userData:null ,banner, minibanner})
         })
+      })
       })
     })
   } 
@@ -62,10 +67,9 @@ const userSignUp = (req, res) => {
 }
 
 const userRegister = (req, res) => {
-
   let verified = 0;
   
-  const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+ 
   const { Username, Email, Password } = req.body;
   let mailDetails = {
     from: "nihadnhd7@gmail.com",

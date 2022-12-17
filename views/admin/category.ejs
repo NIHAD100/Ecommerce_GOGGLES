@@ -1,3 +1,4 @@
+
 <br>
 <br>
 <br>
@@ -6,102 +7,89 @@
 
 <!-- Button trigger modal -->
 <div class="container">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add Category
-  </button>
-</div>
-<!-- Modal -->
-<br>
-<form action="/admin/addcategory" method="post" enctype="multipart/form-data">
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">ADD CATEGORY</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <label for="addcategory">ADD CATEGORY</label>
-          <input type="text" name="categoryName" id="newCategory">
-        </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add Category
+    </button>
+    </div>
+    <!-- Modal -->
+    <br>
+    <form action="/admin/addcategory" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">ADD CATEGORY</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <label for="addcategory">ADD CATEGORY</label>
+            <input type="text" name="categoryName" id="newCategory">
+          </div>
 
-        <div class="modal-body">
-          <label for="addcategory">ADD IMAGE</label>
-          <input type="file" name="categoryimg" id="newCategoryimg">
-        </div>
+          <div class="modal-body">
+            <label for="addcategory">ADD IMAGE</label>
+            <input type="file" name="categoryimg" id="newCategoryimg">
+          </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
-<!-- javascript of modal -->
-<script>
-  const myModal = document.getElementById('myModal')
-  const myInput = document.getElementById('myInput')
-
-  myModal.addEventListener('shown.bs.modal', () => {
+    </form>
+       <!-- javascript of modal -->
+    <script>
+     const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
+    
+    myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus()
-  })
-</script>
+    })
+    </script>
 
-<!-- table -->
-<div class="container">
-  <table id="catId" class="table table-success table-striped">
-    <thead>
-      <tr>
-        <th scope="col">NO</th>
-        <th scope="col">Name</th>
-        <!-- <th scope="col">Image</th> -->
-        <th scope="col">Edit Category</th>
-        <th scope="col">Delete Category</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (var i=0; i<category.length;i++) { %>
-        <tr>
-          <th scope="row">
-            <%= i+1 %>
-          </th>
-          <td>
-            <%= category[i].categoryName %>
-          </td>
-          <!-- <td><img src="<%= category[i].picture %>" style="width:4em; height:4em;"></td> -->
-          <td><a href="" class="btn btn-warning">EDIT</a></td>
-          <td><a onclick="Deletecategory('<%=category[i]._id%>')" class="btn btn-danger">DELETE</a></td>
-        </tr>
-        <% } %>
-    </tbody>
-  </table>
-</div>
+    <!-- table -->
+    <div class="container">
+    <table id="catId" class="table table-success table-striped">
+        <thead>
+            <tr>
+              <th scope="col">NO</th>
+              <th scope="col">Name</th>
+              <th scope="col">Image</th>
+              <th scope="col">Edit Category</th>
+              <th scope="col">Delete Category</th>
+            </tr>
+          </thead>
+          <tbody>
+           <% for (var i=0; i<category.length;i++) { %>
+            <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= category[i].categoryName %></td>
+                <td><img src="<%= category[i].picture %>" style="width:4em; height:4em;"></td>
+                <td><a href="" class="btn btn-warning">EDIT</a></td>
+                <td><a onclick="Deletecategory('<%=category[i]._id%>')" class="btn btn-danger">DELETE</a></td>
+              </tr>
+            <% } %>
+          </tbody>
+      </table>
+    </div>
 
-<script>
-
-  function Deletecategory(categoryId) {
-    swal({
-      title: "DELETE",
-      text: "Do you want to delete the item",
-      icon: 'warning',
-      buttons: ["Cancel", "OK"]
-    }).then(val => {
-      if (val) {
-        fetch('/admin/deleteCategory', {
-          method: 'delete',
-          headers: {
-            'Content-Type': 'application/JSON'
+    <script>
+      function Deletecategory(categoryId){
+        fetch("/admin/deleteCategory",{
+          method:'delete',
+          headers :{
+            'Content-Type':'application/JSON'
           },
-          body: JSON.stringify({
+          body:JSON.stringify({
             categoryId
           })
-        }).then(() => {
-          window.location.reload()
+        }).then(()=>{
+          window.location='/admin/category'
         })
       }
-    })
 
-  }
-
-</script>
+   
+    </script>
+    

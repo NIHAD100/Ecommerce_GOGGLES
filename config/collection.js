@@ -10,6 +10,7 @@ module.exports={
     Coupon_Details:"coupon",
     User_Address:"address",
     Banner_Details:"banner",
+    Mini_Banner_Details:"minibanner",
 }
 
 

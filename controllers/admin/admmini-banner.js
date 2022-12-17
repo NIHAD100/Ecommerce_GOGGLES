@@ -1,9 +1,9 @@
-const loadBanner = require('../../model/banner')
+const loadBanner = require('../../model/mini-banner')
 
 
 const showBanner = (req,res)=>{
-    loadBanner.showBanner().then((banner)=>{
-        res.render('admin/banner',{admin:true,user:false,title:'Banner Control Page',banner})
+    loadBanner.showBanner().then((minibanner)=>{
+        res.render('admin/mini-banner',{admin:true,user:false,title:'Banner Control Page',minibanner})
     })
 }
 
@@ -13,8 +13,8 @@ const addBanner = (req,res)=>{
     
     loadBanner.addToBanner({
         picture:req.file.path
-    }).then((banner)=>{
-        res.redirect('/admin/banner')
+    }).then((minibanner)=>{
+        res.redirect('/admin/mini-banner')
     })
 }
 

@@ -9,8 +9,16 @@ const showCategory = (req,res)=>{
  
 }
 const addCategory =(req,res)=>{
-     loadCategory.addTocategory(req.body).then((category)=>{
-        res.redirect('/admin/category')
+  console.log(req.file);
+  const {
+    categoryName
+  }=req.body
+
+     loadCategory.addTocategory({
+      picture:req.file.path,
+      categoryName
+     }).then((category)=>{
+        res.redirect('/admin/category') 
      })
 }
 
@@ -20,6 +28,7 @@ const deleteCategory = (req,res)=>{
     res.json(response)
   })
 }
+
 
 
 

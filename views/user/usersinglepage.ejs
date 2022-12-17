@@ -5,7 +5,7 @@
 
 			<ul class="short">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="/"">Home</a>
 					<i>|</i>
 				</li>
 				<li>Single Page</li>
@@ -28,7 +28,7 @@
 
 							<ul class="slides">
 								<li data-thumb="user/images/d2.jpg">
-									<div class="thumb-image"> <img src="/images/<%= product.picture %>"
+									<div class="thumb-image"> <img src="<%= product.picture %>"
 											data-imagezoom="true" class="img-fluid" alt=" "> </div>
 								</li>
 								<!-- <li data-thumb="user/images/d1.jpg">
@@ -721,7 +721,6 @@
 
 <script>
 	function addToWishList(proId) {
-		alert("come on", proId)
 		$.ajax({
 			url: '/addtowhishlist',
 			method: 'post',
