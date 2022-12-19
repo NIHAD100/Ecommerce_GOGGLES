@@ -7,7 +7,7 @@ const app = express()
 const db = require('./config/connection')
 const session = require('express-session')
 const cookie = require('cookie-parser')
-const port = 5000;
+const port = 3000;
 
 
 app.use(expresslayout)

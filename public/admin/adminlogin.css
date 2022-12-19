@@ -1,25 +1,26 @@
 .gradient-custom {
     /* fallback for old browsers */
     background: #939195;
-    
+
     /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(to right, rgb(129, 120, 139), rgb(22, 25, 30));
-    
+
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, #01a66f, #bdd99e)
-    }
-    .bg-dark {
-        width: 100%;
-    }
+}
 
-    .product{
-        padding-top:8%;
-    }
+.bg-dark {
+    width: 100%;
+}
 
-    .pname{
-        padding-top: 8%;
-    }
+.product {
+    padding-top: 8%;
+}
 
-    .bname{
-        padding-top: 3%;
-    }
+.pname {
+    padding-top: 8%;
+}
+
+.bname {
+    padding-top: 3%;
+}
