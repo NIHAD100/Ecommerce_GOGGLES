@@ -1,5 +1,6 @@
-
+const userProductView = require('../../model/userProduct');
 const productView = require('../../model/userProduct')
+const { Product_Details } = require('../../config/collection');
 
 
 
@@ -10,10 +11,14 @@ const singlePage = async(req,res)=>{
     let product = await productView.viewProductDetails(productId)
     console.log('helo');
     if(userData){
-        res.render('user/usersinglepage',{admin:false,user:true,product,userData })
+        userProductView.displayProduct().then((productDetails) => {
+        res.render('user/usersinglepage',{admin:false,user:true,product,userData, productDetails })
+        })
         
     }else{
-        res.render('user/usersinglepage',{admin:false,user:true,product,userData:false })
+        userProductView.displayProduct().then((productDetails) => {
+        res.render('user/usersinglepage',{admin:false,user:true,product,userData:false, productDetails  })
+        })
 
     }
 
